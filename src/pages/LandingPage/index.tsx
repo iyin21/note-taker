@@ -58,9 +58,12 @@ const LandingPage = () => {
                     {edit !== null ? "Edit" : "Add"} text
                 </Button>
             </div>
-            <h3 className="text-center font-bold text-center text-[20px] my-4">
-                Your Notes
-            </h3>
+            {allTexts.length > 0 && (
+                <h3 className="text-center font-bold text-center text-[20px] my-4">
+                    Your Notes
+                </h3>
+            )}
+
             <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-4">
                 {allTexts.map((item) => (
                     <div key={item.id} className="border p-4 rounded">
@@ -75,13 +78,19 @@ const LandingPage = () => {
                                 Edit
                             </Button>
                             <Button
-                                onClick={() =>
+                                onClick={() => {
                                     setAllTexts(
                                         allTexts.filter(
                                             (newItem) => newItem.id !== item.id
                                         )
                                     )
-                                }
+                                    localStorage.setItem(
+                                        "noteLists",
+                                        JSON.stringify(allTexts.filter(
+                                            (newItem) => newItem.id !== item.id
+                                        ))
+                                    )
+                                }}
                             >
                                 Delete
                             </Button>
